@@ -44,9 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cells\BaseSell.cs" />
+    <Compile Include="Cells\Creatures\BaseCreature.cs" />
+    <Compile Include="Cells\Creatures\Hero.cs" />
     <Compile Include="Cells\Money.cs" />
     <Compile Include="Cells\Ground.cs" />
     <Compile Include="Cells\Wall.cs" />
+    <Compile Include="ConsolePlay\ConsoleController.cs" />
+    <Compile Include="ConsolePlay\Direction.cs" />
     <Compile Include="LevelStaff\Level.cs" />
     <Compile Include="LevelStaff\LevelBuilder.cs" />
     <Compile Include="LevelStaff\LevelDrawer.cs" />

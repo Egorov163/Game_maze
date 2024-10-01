@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maze.Cells;
+using System;
 
 namespace Maze.LevelStaff
 {
@@ -8,9 +9,12 @@ namespace Maze.LevelStaff
         {
             foreach (var item in level.Cells)
             {
-                Console.SetCursorPosition(item.X, item.Y);
+                Console.SetCursorPosition(item.CoordinateX, item.CoordinateY);
                 Console.WriteLine(item.Simbol);
             }
+
+            Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
+            Console.Write(level.Hero.Simbol);
         }
     }
 }

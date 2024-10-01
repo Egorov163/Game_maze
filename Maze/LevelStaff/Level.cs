@@ -8,6 +8,7 @@ namespace Maze.LevelStaff
         public int Width { get; set; }
         public int Height { get; set; }
         public List<BaseSell> Cells { get; set; } = new List<BaseSell>();
+        public Hero Hero { get; set; }
 
     }
 }
