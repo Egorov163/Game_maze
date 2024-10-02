@@ -1,5 +1,6 @@
 ﻿using Maze.Cells.Creature;
 using Maze.LevelStaff;
+using System;
 
 namespace Maze.Cells
 {
@@ -9,6 +10,8 @@ namespace Maze.Cells
         {
         }
         public override string Simbol => "$";
+
+        public override ConsoleColor Color => ConsoleColor.Green;
 
         public override bool Step(BaseCreature creature)
         {

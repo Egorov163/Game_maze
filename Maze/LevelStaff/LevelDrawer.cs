@@ -12,10 +12,12 @@ namespace Maze.LevelStaff
             foreach (var item in level.Cells)
             {
                 Console.SetCursorPosition(item.CoordinateX, item.CoordinateY);
+                Console.ForegroundColor = item.Color;
                 Console.WriteLine(item.Simbol);
             }
 
             Console.SetCursorPosition(level.Hero.CoordinateX, level.Hero.CoordinateY);
+            Console.ForegroundColor = level.Hero.Color;
             Console.Write(level.Hero.Simbol);
         }
 
