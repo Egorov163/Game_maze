@@ -13,7 +13,7 @@ namespace Maze.Cells
 
         public override ConsoleColor Color => ConsoleColor.Green;
 
-        public override bool Step(BaseCreature creature)
+        public override bool ActionStep(BaseCreature creature)
         {
             return true;
         }

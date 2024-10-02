@@ -12,7 +12,7 @@ namespace Maze.ConsolePlay
             var builder = new LevelBuilder();
             var drawer = new LevelDrawer();
 
-            _level = builder.Build(30, 15,5);
+            _level = builder.Build(30, 15,13);
             drawer.Draw(_level);
 
             var isGameOver = false;
@@ -78,7 +78,7 @@ namespace Maze.ConsolePlay
                 return;
             }
 
-            if (destinationCell.Step(_level.Hero))
+            if (destinationCell.ActionStep(_level.Hero))
             {
                 _level.Hero.CoordinateX = destinationX;
                 _level.Hero.CoordinateY = destinationY;

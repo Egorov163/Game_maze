@@ -19,7 +19,7 @@ namespace Maze.Cells
         public abstract ConsoleColor Color { get; }
 
         public abstract string Simbol { get; }
-        public abstract bool Step(BaseCreature creature);
+        public abstract bool ActionStep(BaseCreature creature);
 
     }
 }
