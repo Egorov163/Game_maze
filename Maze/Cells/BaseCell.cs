@@ -4,9 +4,9 @@ using System;
 
 namespace Maze.Cells
 {
-    public abstract class BaseSell
+    public abstract class BaseCell
     {
-        public BaseSell(int x, int y, Level level)
+        public BaseCell(int x, int y, Level level)
         {
             CoordinateX = x;
             CoordinateY = y;
@@ -19,7 +19,7 @@ namespace Maze.Cells
         public abstract ConsoleColor Color { get; }
 
         public abstract string Simbol { get; }
-        public abstract bool ActionStep(BaseCreature creature);
+        public abstract bool Step(BaseCreature creature);
 
     }
 }

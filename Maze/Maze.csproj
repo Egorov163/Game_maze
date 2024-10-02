@@ -44,8 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cells\BaseSell.cs" />
+    <Compile Include="Cells\BaseCell.cs" />
     <Compile Include="Cells\Creatures\BaseCreature.cs" />
+    <Compile Include="Cells\Creatures\Goblin.cs" />
     <Compile Include="Cells\Creatures\Hero.cs" />
     <Compile Include="Cells\Money.cs" />
     <Compile Include="Cells\Ground.cs" />

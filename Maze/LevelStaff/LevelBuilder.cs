@@ -1,8 +1,9 @@
 ﻿using Maze.Cells;
+using Maze.Cells.Creatures;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Maze.LevelStaff
 {
@@ -10,8 +11,12 @@ namespace Maze.LevelStaff
     {
         private Level _level;
         private Random _random;
+        private const bool SHOW_MAZEGENERATION_SLOWLY = false;
 
-        public Level Build(int width = 10, int height = 5, int seedForRandom = -1)
+        public Level Build(int width = 10,
+            int height = 5,
+            int seedForRandom = -1,
+            int goblinCount = 3)
         {
             if (seedForRandom > 0)
             {
@@ -28,16 +33,68 @@ namespace Maze.LevelStaff
                 Height = height,
             };
             BuildWall();
-            BuildGroundRandom();
+            BuildGroundSmart();
             BuildMoney();
+
+            //Generate creature
             BuildHero();
+            BuildGoblin(goblinCount);
 
             return _level;
         }
 
+        private void BuildGoblin(int goblinCount)
+        {
+            for (int i = 0; i < goblinCount; i++)
+            {
+                var moneys = _level.Cells.OfType<Money>().ToList();
+                var randomIndex = _random.Next(moneys.Count());
+                var money = moneys[randomIndex];
+
+                var goblin = new Goblin(money.CoordinateX, money.CoordinateY, _level);
+                _level.Creatures.Add(goblin);
+            }
+        }
+
+        private void BuildGroundSmart()
+        {
+            var markToDestroy = new List<BaseCell>();
+
+            var randomIndex = _random.Next(_level.Cells.Count);
+            var randomWall = _level.Cells[randomIndex];
+            markToDestroy.Add(randomWall);
+
+
+
+            while (markToDestroy.Any())
+            {
+                if (SHOW_MAZEGENERATION_SLOWLY)
+                {
+                    var drawer = new LevelDrawer();
+                    drawer.Draw(_level);
+                    Thread.Sleep(200);
+                }
+
+                randomIndex = _random.Next(markToDestroy.Count);
+                randomWall = markToDestroy[randomIndex];
+
+                _level.ReplaceToGround(randomWall);
+                markToDestroy.Remove(randomWall);
+
+                var nearest = _level.GetNearCells<Wall>(randomWall);
+                markToDestroy.AddRange(nearest);
+
+                markToDestroy = markToDestroy
+                    .Where(cell => _level.GetNearCells<Ground>(cell).Count() < 2)
+                    .ToList();
+            }
+        }
+
+
+
         private void BuildHero()
         {
-            var cell = _level.Cells.First(x=>x is Ground);
+            var cell = _level.Cells.First(x => x is Ground);
 
             var hero = new Hero(cell.CoordinateX, cell.CoordinateY, _level);
             _level.Hero = hero;

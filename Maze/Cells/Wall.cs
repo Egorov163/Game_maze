@@ -4,7 +4,7 @@ using System;
 
 namespace Maze.Cells
 {
-    public class Wall : BaseSell
+    public class Wall : BaseCell
     {
         public Wall(int x, int y, Level level) : base(x, y, level)
         {
@@ -14,7 +14,7 @@ namespace Maze.Cells
 
         public override ConsoleColor Color => ConsoleColor.DarkGray;
 
-        public override bool ActionStep(BaseCreature creature)
+        public override bool Step(BaseCreature creature)
         {
             return false;
         }

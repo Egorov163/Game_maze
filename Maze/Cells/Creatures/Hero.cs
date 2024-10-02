@@ -14,9 +14,16 @@ namespace Maze.Cells
 
         public override ConsoleColor Color => ConsoleColor.White;
 
-        public override bool ActionStep(BaseCreature creature)
+        public override BaseCell ChooseCellToStep()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Step(BaseCreature creature)
         {
             throw new System.NotImplementedException();
         }
+
+        
     }
 }

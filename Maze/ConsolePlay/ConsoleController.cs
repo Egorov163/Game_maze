@@ -1,4 +1,6 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells;
+using Maze.Cells.Creature;
+using Maze.LevelStaff;
 using System;
 using System.Linq;
 
@@ -12,7 +14,7 @@ namespace Maze.ConsolePlay
             var builder = new LevelBuilder();
             var drawer = new LevelDrawer();
 
-            _level = builder.Build(30, 15,13);
+            _level = builder.Build(20,15,13);
             drawer.Draw(_level);
 
             var isGameOver = false;
@@ -71,17 +73,30 @@ namespace Maze.ConsolePlay
             }
 
             var destinationCell = _level.Cells
-                .SingleOrDefault(x => x.CoordinateX == destinationX && x.CoordinateY == destinationY);
+               .SingleOrDefault(x => x.CoordinateX == destinationX && x.CoordinateY == destinationY);
+
+            MoveCreature(_level.Hero, destinationCell);
+
+            foreach (var item in _level.Creatures)
+            {
+                var cell = item.ChooseCellToStep();
+                MoveCreature(item, cell);
+            }
+        }
+
+        private void MoveCreature(BaseCreature creature, BaseCell destinationCell)
+        {
+            
 
             if (destinationCell == null)
             {
                 return;
             }
 
-            if (destinationCell.ActionStep(_level.Hero))
+            if (destinationCell.Step(creature))
             {
-                _level.Hero.CoordinateX = destinationX;
-                _level.Hero.CoordinateY = destinationY;
+                creature.CoordinateX = destinationCell.CoordinateX;
+                creature.CoordinateY = destinationCell.CoordinateY;
             }
         }
     }
