@@ -1,5 +1,4 @@
-﻿using Maze.LevelStaff;
-using System;
+﻿using Maze.ConsolePlay;
 
 namespace Maze
 {
@@ -7,14 +6,8 @@ namespace Maze
     {
         static void Main(string[] args)
         {
-            var builder = new LevelBuilder();
-            var level = builder.Build(10, 6);
-
-            var drawer = new LevelDrawer();
-            drawer.Draw(level);
-
-            Console.ReadLine();
-
+            var consoleController = new ConsoleController();
+            consoleController.Play();
         }
     }
 }

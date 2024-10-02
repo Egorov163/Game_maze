@@ -10,6 +10,7 @@ namespace Maze.LevelStaff
     {
         private Level _level;
         private Random _random;
+
         public Level Build(int width = 10, int height = 5, int seedForRandom = -1)
         {
             if (seedForRandom > 0)
@@ -29,25 +30,34 @@ namespace Maze.LevelStaff
             BuildWall();
             BuildGroundRandom();
             BuildMoney();
+            BuildHero();
 
             return _level;
         }
 
+        private void BuildHero()
+        {
+            var cell = _level.Cells.First(x=>x is Ground);
+
+            var hero = new Hero(cell.CoordinateX, cell.CoordinateY, _level);
+            _level.Hero = hero;
+        }
+
         private void BuildGroundRandom()
-        {        
-            for (int i = 0; i < 15; i++)
+        {
+            var groundCount = _level.Height * _level.Width / 2;
+
+            for (int i = 0; i < groundCount; i++)
             {
                 var randomX = _random.Next(_level.Width);
                 var randomY = _random.Next(_level.Height);
 
-                var randomWall = _level.Cells.First(x => x.X == randomX && x.Y == randomY);
+                var randomWall = _level.Cells.First(x => x.CoordinateX == randomX && x.CoordinateY == randomY);
                 var ground = new Ground(randomX, randomY, _level);
-                
+
                 _level.Cells.Remove(randomWall);
                 _level.Cells.Add(ground);
             }
-
-
         }
 
         private void BuildWall()
@@ -57,7 +67,7 @@ namespace Maze.LevelStaff
                 for (int y = 0; y < _level.Height; y++)
                 {
                     var cell = new Wall(x, y, _level);
-                   
+
                     _level.Cells.Add(cell);
                 }
             }
@@ -65,18 +75,18 @@ namespace Maze.LevelStaff
 
         public void BuildMoney()
         {
-            var cellGround = _level.Cells.Where(c=>c.GetType() == typeof(Ground));
+            var cellGround = _level.Cells.Where(c => c is Ground).ToList();
 
-            for (int i = 0; i < cellGround.Count()/2; i++)
+            for (int i = 0; i < cellGround.Count() / 10; i++)
             {
-               var randomCount =  _random.Next(cellGround.Count());
-                var cell = cellGround.ElementAt(randomCount);
+                var randomGroundIndex = _random.Next(cellGround.Count());
+                var randomGround = cellGround[randomGroundIndex];
 
-                var money = new Money(cell.X,cell.Y, _level);
+                var money = new Money(randomGround.CoordinateX, randomGround.CoordinateY, _level);
 
-                _level.Cells.Remove(cell);
+                _level.Cells.Remove(randomGround);
                 _level.Cells.Add(money);
-            }          
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Maze.LevelStaff;
+﻿using Maze.Cells.Creature;
+using Maze.LevelStaff;
 
 namespace Maze.Cells
 {
@@ -6,14 +7,16 @@ namespace Maze.Cells
     {
         public BaseSell(int x, int y, Level level)
         {
-            X = x;
-            Y = y;
+            CoordinateX = x;
+            CoordinateY = y;
             Level = level;
         }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int CoordinateX { get; set; }
+        public int CoordinateY { get; set; }
         public Level Level { get; set; }
+
         public abstract string Simbol { get; }
+        public abstract bool Step(BaseCreature creature);
 
     }
 }
